@@ -6,21 +6,22 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jpl.Atom;
-import jpl.Float;
-import jpl.Integer;
-import jpl.Term;
-import jpl.Util;
+import scala.collection.JavaConverters;
+
+import org.jpl7.Atom;
+import org.jpl7.Float;
+import org.jpl7.Integer;
+import org.jpl7.Term;
 
 import org.nlogo.api.ExtensionException;
 import org.nlogo.api.LogoException;
-import org.nlogo.api.LogoList;
+import org.nlogo.core.LogoList;
 import org.nlogo.api.LogoListBuilder;
 
 public class Utils {
 	private static final String NL_STRING="java.lang.String";
 	private static final String NL_NUMBER="java.lang.Double";
-	private static final String NL_LIST="org.nlogo.api.LogoList";
+	private static final String NL_LIST="org.nlogo.core.LogoList";
     
 	// Type conversion from NetLogo to Prolog.
     public static String nlArgToPlString(Object obj) throws ExtensionException{
@@ -44,7 +45,7 @@ public class Utils {
     // List conversion, from NetLogo list to Prolog list.
     public static String nlListToPlString(LogoList l) throws ExtensionException{
     	String ret="[";
-    	Iterator<Object> it=l.iterator();
+    	Iterator<Object> it = JavaConverters.asJavaIterator(l.iterator());
     	boolean first=true;
     	while(it.hasNext()){
     		if(!first)
@@ -69,7 +70,7 @@ public class Utils {
 			String key=m.group();
 			int keyVal=java.lang.Integer.parseInt(key.substring(1));
 			if(!replacements.containsKey(keyVal)){
-				replacements.put(new java.lang.Integer(keyVal), argsList.get(keyVal-1));
+				replacements.put(java.lang.Integer.valueOf(keyVal), argsList.get(keyVal-1));
 			}
 		}
 		
@@ -95,8 +96,8 @@ public class Utils {
 
     	if(t.isCompound()&&!t.isAtom()){
 			LogoListBuilder res=new LogoListBuilder();
-			if(t.name().equals(".")){		// if t is a list
-				Term [] lterm=Util.listToTermArray(t);
+			if(t.isList()){		// if t is a list
+				Term [] lterm=Term.listToTermArray(t);
 				for(int i=0;i<lterm.length;i++){
 					res.add(plTermTOnlTermJPL(lterm[i]));
 				}
@@ -110,9 +111,9 @@ public class Utils {
 			}
 			return res.toLogoList();
 		}else if(t.isFloat()){
-			return new Double(((Float)t).doubleValue());
+			return Double.valueOf(((Float)t).doubleValue());
 		}else if(t.isInteger()){
-			return new Double(((Integer)t).intValue());
+			return Double.valueOf(((Integer)t).intValue());
 		}else if(t.isAtom()){
 			String atom=new String(((Atom)t).toString());
 			if(atom.equals("[]")){

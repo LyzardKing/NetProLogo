@@ -1,14 +1,14 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Map;
 
 public class SolStore {
-	// Each Hashtable represents one solution (a mapping between var names and values).
-	private ArrayList<Hashtable> solutions;
+	// Each Map represents one solution (a mapping between var names and values).
+	private ArrayList<Map> solutions;
 	private int pointer;
 	
-	public SolStore(ArrayList<Hashtable> solutions){
+	public SolStore(ArrayList<Map> solutions){
 		this.solutions=solutions;
 		pointer=-1;
 	}

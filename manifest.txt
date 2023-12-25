@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-NetLogo-Extension-API-Version: 5.0
+NetLogo-Extension-API-Version: 6.1
 Extension-Name: netprologo
 Class-Manager: main.NetPrologoExtension
 Created-By: Juan Galan Paez

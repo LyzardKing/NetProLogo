@@ -3,8 +3,10 @@ package main;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
 
-import jpl.Query;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 import org.nlogo.api.DefaultClassManager;
 import org.nlogo.api.ExtensionException;
@@ -28,7 +30,7 @@ public class NetPrologoExtension extends DefaultClassManager {
 	// Denotes if there is an active query.
 	private static boolean finished = true;
 	// Stores current solution
-	private static Hashtable jplSolution;
+	private static Map<String, Term> jplSolution;
 	// Id generator for solutions Stores.
 	private static int idCounter;
 	// Maps active solitions Stores with their ids.
@@ -74,7 +76,7 @@ public class NetPrologoExtension extends DefaultClassManager {
 	// Close current query.
 	public static void release(){
 		if(jplQuery!=null){
-			jplQuery.rewind();
+			jplQuery.close();
 			jplSolution = null;
 			finished=true;
 		}
@@ -98,7 +100,7 @@ public class NetPrologoExtension extends DefaultClassManager {
 		release();
 		jplQuery=new Query(q);
 		int count=0;
-		ArrayList<Hashtable> sols=new ArrayList<Hashtable>();
+		ArrayList<Map> sols=new ArrayList<Map>();
 		while(jplQuery.hasMoreSolutions() && count < n){
 			sols.add(jplQuery.nextSolution());
 			count++;

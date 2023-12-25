@@ -2,20 +2,23 @@ package primitives;
 
 import main.NetPrologoExtension;
 
+import org.jpl7.Term;
+
 import org.nlogo.api.Argument;
 import org.nlogo.api.Context;
-import org.nlogo.api.DefaultReporter;
+import org.nlogo.api.Reporter;
 import org.nlogo.api.ExtensionException;
 import org.nlogo.api.LogoException;
-import org.nlogo.api.Syntax;
+import org.nlogo.core.Syntax;
+import org.nlogo.core.SyntaxJ;
 
 import utils.Utils;
 
 //Dereference a specific variable from the last solution loaded of a certain solution store.
-public class DereferenceVarInStore extends DefaultReporter {
+public class DereferenceVarInStore implements Reporter {
 
 	public Syntax getSyntax() {
-		return Syntax.reporterSyntax(new int[] {Syntax.NumberType(),Syntax.StringType()}, Syntax.WildcardType());
+		return SyntaxJ.reporterSyntax(new int[] {Syntax.NumberType(),Syntax.StringType()}, Syntax.WildcardType());
     }
 	
 	@Override
@@ -32,7 +35,7 @@ public class DereferenceVarInStore extends DefaultReporter {
 		Object ret;
 		try {
 			// Type conversion from Prolog to NetLogo
-			ret = Utils.plTermTOnlTermJPL((jpl.Term)obj);
+			ret = Utils.plTermTOnlTermJPL((Term)obj);
 		} catch (LogoException e) {
 			throw new ExtensionException(e.getMessage());
 		}
