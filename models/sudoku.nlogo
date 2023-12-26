@@ -3,7 +3,7 @@ extensions[netprologo]
 
 ; Initialize Prolog only in the startup
 to startup
-  if not netprologo:run-query "consult('C:/utils/models/sudoku.pl')"
+  if not netprologo:run-query "consult('sudoku.pl')"
   [
     user-message "Error loading prolog file"
   ]
@@ -15,7 +15,7 @@ to create-puzzle [Nr]
   no-display
   ; Emphasize the blocks
   ask patches [
-    ifelse ((int (pxcor / 3) + int (pycor / 3)) mod 2) = 1 
+    ifelse ((int (pxcor / 3) + int (pycor / 3)) mod 2) = 1
       [set pcolor white]
       [set pcolor grey + 3]
     if ((pxcor + pycor) mod 2) = 1 [set pcolor pcolor - .5]
@@ -27,10 +27,10 @@ to create-puzzle [Nr]
   ask n-of Nr patches [
     set plabel-color blue
     set plabel (1 + random 9)
-    ] 
-  ; Test if there is a solution 
+    ]
+  ; Test if there is a solution
   ; if not, start again
-  let query netprologo:build-prolog-call "sudoku(?1,Sol)" puzzle-to-list 
+  let query netprologo:build-prolog-call "sudoku(?1,Sol)" puzzle-to-list
   let rq netprologo:run-query query
   if not rq [create-puzzle Nr]
   display
@@ -45,13 +45,13 @@ end
 
 ; Procedure to convert from visual puzzle to list
 to-report puzzle-to-list
-  let mat map [[content] of ?] (sort patches)
+  let mat map [ ?1 -> [content] of ?1 ] (sort patches)
   report mat
-end    
+end
 
 ; Procedure to convert from list to visual puzzle
 to list-to-puzzle [Sol]
-    (foreach (sort patches) Sol [
+    (foreach (sort patches) Sol [ [?1 ?2] ->
         ask ?1 [set plabel ?2]
     ])
 end
@@ -66,8 +66,8 @@ end
 GRAPHICS-WINDOW
 9
 49
-361
-422
+359
+400
 -1
 -1
 38.0
@@ -116,7 +116,7 @@ N
 N
 2
 15
-7
+7.0
 1
 1
 NIL
@@ -459,9 +459,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -477,7 +476,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

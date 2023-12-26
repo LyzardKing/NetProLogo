@@ -37,7 +37,6 @@ public class RunQueryJPL implements Reporter {
         	throw new ExtensionException(e.getMessage());
         }
         
-        // consult('/home/galileo/Documents/Projects/netlogo/sample-models/coloring.pl')"
         if (call.startsWith("consult(")) {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(call);

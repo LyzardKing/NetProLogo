@@ -7,7 +7,7 @@ extensions[netprologo]
 to initialize
   ca
   ; First, we initialize Prolog
-  if netprologo:run-query "consult('C:/utils/models/coloring.pl')"
+  if netprologo:run-query "consult('coloring.pl')"
   [show "Prolog File loaded"]
   ; Second, we create the graph on netlogo
   build-graph
@@ -33,20 +33,20 @@ to load-color-facts
   if not netprologo:run-query "retractall(color(_))"
   [show "cant remove color facts."]
   ; Fill the new Colors KB
-  foreach (n-values numColors [5 + (? + 1) * 10])
-  [
+  foreach (n-values numColors [ ?1 -> 5 + (?1 + 1) * 10 ])
+  [ ?1 ->
     ;; add color to knowledge base
-    if not netprologo:run-query (netprologo:build-prolog-call "assert(color(?1))" ?)
+    if not netprologo:run-query (netprologo:build-prolog-call "assert(color(?1))" ?1)
     [show "Error loading color facts."]
   ]
-end 
+end
 
 ; Creating the Vertex KB
 to load-vertex-facts
   ;; Clean Vertex Knowledge Base
   if not netprologo:run-query "retractall(vertex(_))"
   [show "cant remove vertex facts."]
-  ; Fill the new Vertex KB from turtle-nodes 
+  ; Fill the new Vertex KB from turtle-nodes
   ask turtles
   [
     ;; add vertex to knowledge base
@@ -60,7 +60,7 @@ to load-arc-facts
   ;; Clean Arcs Knowledge Base
   if not netprologo:run-query "retractall(arc(_,_))"
   [show "cant remove arc facts."]
-  ; Fill the new Arcs KB from links 
+  ; Fill the new Arcs KB from links
   ask links
   [
     ;; add arc to knowledge base
@@ -70,7 +70,7 @@ to load-arc-facts
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Procedure for look for one more solution 
+; Procedure for look for one more solution
 to next-coloring
   ; Check of there are more solutions
   ifelse not netprologo:run-next
@@ -80,8 +80,8 @@ to next-coloring
     let solution netprologo:dereference-var "R"
     ; and apply color to every node
     foreach solution
-    [
-      ask turtle (first ?) [ set color (last ?) ]
+    [ ?1 ->
+      ask turtle (first ?1) [ set color (last ?1) ]
     ]
   ]
 end
@@ -103,7 +103,7 @@ to build-graph
   ]
   ; Layout for the graph
   no-display
-  repeat 10000 [ layout-spring turtles links 1 10 1 ] 
+  repeat 10000 [ layout-spring turtles links 1 10 1 ]
   display
 end
 
@@ -112,10 +112,10 @@ end
 GRAPHICS-WINDOW
 187
 10
-677
-521
-30
-30
+675
+499
+-1
+-1
 7.87
 1
 10
@@ -162,7 +162,7 @@ numVertex
 numVertex
 2
 30
-7
+7.0
 1
 1
 NIL
@@ -177,7 +177,7 @@ numColors
 numColors
 1
 14
-2
+2.0
 1
 1
 NIL
@@ -209,7 +209,7 @@ arcProbability
 arcProbability
 5
 100
-11
+11.0
 1
 1
 %
@@ -519,9 +519,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -537,7 +536,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

@@ -9,14 +9,14 @@ to tour [N]
   ca
   ; First we need to initialize the Prolog engine
   initialize-prolog
-  
+
   ; Create the NxN board
   ; Resize the Logo world: one patch = one square in the board
   resize-world 0 (N - 1) 0 (N - 1)
   set-patch-size 300 / N
   ; Set chess board colors
   ask patches with [(pxcor + pycor) mod 2 = 0] [
-    set pcolor white 
+    set pcolor white
     set plabel-color black]
   ; Create Knight as a turtle
   create-turtles 1 [
@@ -25,8 +25,8 @@ to tour [N]
     setxy 0 N - 1
     set pen-size 5
     pd
-  ] 
-  
+  ]
+
   ; Look for a solution with Prolog...
   ; First: create the prolog query that will look for the solution
   let prolog-query (netprologo:build-prolog-call "knights(?1, X)" board-size)
@@ -35,7 +35,7 @@ to tour [N]
   ; Second: take the first solution from the previous query
   let rn netprologo:run-next
   let sol netprologo:dereference-var "X"
- 
+
   ; Represent the solution by moving the knight
   move-knight sol
 end
@@ -46,7 +46,7 @@ to initialize-prolog
   ; We initialize Prolog by sending a query to load a .PL file
   ; (see info tab for the prolog code)
   ; (see extension doc for the meaning of netprologo:run-query)
-  if not netprologo:run-query "consult('C:/utils/models/Knights-Tour.pl')"
+  if not netprologo:run-query "consult('Knights-Tour.pl')"
   [
     user-message "Error loading prolog file"
   ]
@@ -56,10 +56,10 @@ end
 to move-knight [moves]
   let counter 1
   foreach moves
-  [
-    ask turtles 
+  [ ?1 ->
+    ask turtles
     [
-      setxy ((first ?) - 1) ((last ?) - 1)
+      setxy ((first ?1) - 1) ((last ?1) - 1)
       wait .1
       ask patch-here [set plabel counter]
     ]
@@ -70,8 +70,8 @@ end
 GRAPHICS-WINDOW
 114
 10
-423
-340
+422
+319
 -1
 -1
 60.0
@@ -120,7 +120,7 @@ board-size
 board-size
 3
 6
-5
+5.0
 1
 1
 NIL
@@ -520,9 +520,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -538,7 +537,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

@@ -2,7 +2,7 @@
 
 extensions[netprologo]
 
-; Global Variables Declaration 
+; Global Variables Declaration
 
 globals [
   Num-solutions ; solutions counter.
@@ -16,7 +16,7 @@ to create-board [N]
   ca
   ; First we need to initialize the Prolog engine
   initialize-prolog
-  
+
   ; Resize the Logo world: one patch = one square in the board
   resize-world 0 (N - 1) 0 (N - 1)
   set-patch-size 300 / N
@@ -28,16 +28,16 @@ to create-board [N]
     set shape "chess queen"
     set color yellow
     setxy who 0
-  ] 
+  ]
   ; Set eof-sol to not-reached-end-of-solutions
-  set eof-sol false 
-  
+  set eof-sol false
+
   ; Load 'Solutions' with first 15000 solutions.
   ; First: create the prolog query that will form the solutions
   let prolog-query (netprologo:build-prolog-call "queens(?1, X)" board-size)
   ; Second: look for the solutions using the previous query
   set Solutions netprologo:run-for-n-solutions 15000 prolog-query
-  
+
   ; Restart the solutions counter
   set num-solutions 0
 end
@@ -48,7 +48,7 @@ to initialize-prolog
   ; We initialize Prolog by sending a query to load a .PL file
   ; (see info tab for the prolog code)
   ; (see extension doc for the meaning of netprologo:run-query)
-  if not netprologo:run-query "consult('C:/utils/models/nqueens.pl')"
+  if not netprologo:run-query "consult('nqueens.pl')"
   [
     user-message "Error loading prolog file"
   ]
@@ -65,8 +65,8 @@ to next
     ; If there is one more solution...
     ; Get value from current solution (see Prolog Source Code)
     let sol netprologo:dereference-stored-var Solutions "X"
-    ; Use 'sol' to move thw queens to show the current solution 
-    (foreach sol (n-values board-size [?]) [
+    ; Use 'sol' to move thw queens to show the current solution
+    (foreach sol (n-values board-size [ ?1 -> ?1 ]) [ [?1 ?2] ->
       ask turtle ?2 [
         let d distancexy ?2 (?1 - 1)
         facexy ?2 (?1 - 1)
@@ -81,7 +81,7 @@ to next
     ; if we have recovered all the stored solutions...
     ; update the end-of-solutions variable
     set eof-sol true
-    ; and show that we have finished all the solutions 
+    ; and show that we have finished all the solutions
     set num-solutions (word num-solutions ".")
   ]
 end
@@ -89,8 +89,8 @@ end
 GRAPHICS-WINDOW
 114
 10
-423
-340
+422
+319
 -1
 -1
 27.272727272727273
@@ -139,7 +139,7 @@ board-size
 board-size
 4
 15
-11
+11.0
 1
 1
 NIL
@@ -523,9 +523,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -541,7 +540,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

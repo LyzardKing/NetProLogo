@@ -8,27 +8,27 @@ globals [
 ]
 
 to startup
-  netprologo:close-query  
-  if not netprologo:run-query "consult('C:/utils/models/von-koch.pl')"
+  netprologo:close-query
+  if not netprologo:run-query "consult('von-koch.pl')"
   [
     user-message "Error loading prolog file"
   ]
 end
 
 to test
-  ca 
+  ca
   generate-tree N
 end
-  
-to solve  
-  let query netprologo:build-prolog-call "solve-von-koch(?1,X)" tree-list 
+
+to solve
+  let query netprologo:build-prolog-call "solve-von-koch(?1,X)" tree-list
   set solutions netprologo:run-query query
   let rs netprologo:run-next
   ifelse rs [
     let sol netprologo:dereference-var "X"
-    foreach sol [
-      let nodo read-from-string (bf first ?)
-      let valor last ?
+    foreach sol [ ?1 ->
+      let nodo read-from-string (bf first ?1)
+      let valor last ?1
       ask turtle nodo [set label valor]
     ]
     ask links [
@@ -58,9 +58,9 @@ to generate-tree [num-nodes]
         set label-color yellow
         set thickness .3
       ]
-    ] 
+    ]
   ]
-  
+
   ; Locate Tree
   no-display
   repeat 10000 [
@@ -90,10 +90,10 @@ end
 GRAPHICS-WINDOW
 9
 49
-380
-441
-16
-16
+378
+419
+-1
+-1
 10.94
 1
 13
@@ -140,7 +140,7 @@ N
 N
 2
 12
-8
+8.0
 1
 1
 NIL
@@ -483,9 +483,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -501,7 +500,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@
