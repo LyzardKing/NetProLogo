@@ -1,0 +1,28 @@
+name: Build JAR
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: setup-scala
+      uses: olafurpg/setup-scala@v14
+    - name: Install SWI-Prolog backend
+      run: sudo apt-add-repository -y ppa:swi-prolog/stable; sudo apt update; sudo apt install swi-prolog-java
+    - name: build application
+      run: sbt package
+    - uses: actions/upload-artifact@v4
+      with:
+        name: netprologo.jar
+        path: netprologo.jar

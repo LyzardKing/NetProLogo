@@ -21,3 +21,11 @@ hs_err_pid*
 .buildpath
 .project
 /bin/
+
+.bundledFiles
+target/
+extensions/
+/*.jar
+/*.zip
+
+project/build.properties
