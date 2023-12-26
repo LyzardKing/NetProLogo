@@ -10,8 +10,13 @@ import org.nlogo.api.LogoException;
 import org.nlogo.core.Syntax;
 import org.nlogo.core.SyntaxJ;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 //Opens a new Prolog query.
 public class RunQueryJPL implements Reporter {
+
+    final static String regex = "consult\\(\\'(.+)\\'\\)";
 
     public Syntax getSyntax() {
         return SyntaxJ.reporterSyntax(new int[] {Syntax.StringType()}, Syntax.BooleanType());
@@ -20,12 +25,32 @@ public class RunQueryJPL implements Reporter {
 	@Override
 	public Object report(Argument[] arg0, Context arg1) throws ExtensionException{
         String call;
-        try{
+        String currentDirectory = ".";
+        try {
+            currentDirectory = arg1.attachCurrentDirectory(currentDirectory);
+        } catch (java.net.MalformedURLException ex) {
+            throw new ExtensionException(ex);
+        }
+        try {
             call = arg0[0].getString();
-        }catch( LogoException e ){
+        } catch( LogoException e ){
         	throw new ExtensionException(e.getMessage());
         }
         
+        // consult('/home/galileo/Documents/Projects/netlogo/sample-models/coloring.pl')"
+        if (call.startsWith("consult(")) {
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(call);
+
+            if (matcher.find()) {
+                String path = matcher.group(1);
+                if (!path.startsWith("/")) {
+                    path = currentDirectory + "/" + path;
+                    call = "consult('" + path + "')";
+                }
+            }
+        }
+
     	return NetPrologoExtension.runQueryJPL(call); 
 	}
 }

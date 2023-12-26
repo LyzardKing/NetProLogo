@@ -20,7 +20,6 @@ import primitives.NextSolutionInStore;
 import primitives.RunNextJPL;
 import primitives.RunQueryJPL;
 import primitives.RunQueryNsolutions;
-import utils.PathManagement;
 import utils.SolStore;
 
 public class NetPrologoExtension extends DefaultClassManager {
@@ -67,10 +66,6 @@ public class NetPrologoExtension extends DefaultClassManager {
 	private static void initializeExtension() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		idCounter=0;
 		solutionsStore=new Hashtable<Integer,SolStore>();
-		
-		if(PathManagement.getOs().indexOf("win") < 0){
-			PathManagement.updateSystemPath();
-		}
 	}
 	
 	// Close current query.
