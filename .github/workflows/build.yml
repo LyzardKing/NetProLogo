@@ -3,6 +3,8 @@ name: Build JAR
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - "src"
 
 jobs:
   build:
@@ -21,8 +23,8 @@ jobs:
     - name: Install SWI-Prolog backend
       run: sudo apt-add-repository -y ppa:swi-prolog/stable; sudo apt update; sudo apt install swi-prolog-java
     - name: build application
-      run: sbt package
+      run: sbt packageZip
     - uses: actions/upload-artifact@v4
       with:
-        name: netprologo.jar
-        path: netprologo.jar
+        name: netprologo-1.0.0.zip
+        path: netprologo-1.0.0.zip

@@ -35,10 +35,15 @@ Before using the extension make sure you have installed the proper [NetLogo](htt
 
 ## Installation
 
-* Go to the NetLogo folder. In `extensions` folder copy NetProLogo files. The files must look like:
- * `/NetLogo x.x.x/extensions/netprologo/netprologo.jar`
+* Go to the NetLogo folder. In `extensions` folder extract the content of the Zip file in a netprologo folder.
 
-* Edit the `netlogo-gui.sh` file, and add the following just before the last line:\
+* To use the bundled version of Java you can run the `Netlogo` file
+  * Before you run check that you have the jpl.jar file in the `extensions/netprologo` folder (should be included by default)
+  * Modify the `lib/app/netlogo.cfg` file, and add the following just before the last line:\
+  `java-options=-Djava.library.path=<PLLIBDIR>`
+
+* To use the system version of Java you can run the `netlogo-gui.sh` file
+  * Before you run it you should edit it, and add the following just before the last line:\
   `JVM_OPTS=($JVM_OPTS -Djava.library.path="<PLLIBDIR>")`\
   `ABSOLUTE_CLASSPATH="$ABSOLUTE_CLASSPATH:<PLLIBDIR parent>/jpl.jar"`
 
