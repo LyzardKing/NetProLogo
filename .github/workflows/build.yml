@@ -19,8 +19,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: setup-scala
-      uses: olafurpg/setup-scala@v14
+        cache: 'sbt'
     - name: Install SWI-Prolog backend
       run: sudo apt-add-repository -y ppa:swi-prolog/stable; sudo apt update; sudo apt install swi-prolog-java
     - name: build application
