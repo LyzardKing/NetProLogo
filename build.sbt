@@ -5,6 +5,7 @@ enablePlugins(NetLogoExtension)
 name := "netprologo"
 version := "1.0.0"
 isSnapshot := true
+scalaVersion := "3.7.0"
 
 javacOptions ++= Seq("-source", "17", "-target", "17")
 
