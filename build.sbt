@@ -10,7 +10,7 @@ javacOptions ++= Seq("-source", "17", "-target", "17")
 
 Compile / javaSource := baseDirectory.value / "src"
 
-netLogoVersion := "6.3.0"
+netLogoVersion := "7.0.0"
 netLogoClassManager := "main.NetPrologoExtension"
 
 resolvers += "jitpack" at "https://jitpack.io"

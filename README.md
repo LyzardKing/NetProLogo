@@ -16,15 +16,15 @@ Any feedback you can provide regarding use cases, installation issues or future 
 
 Before using the extension make sure you have installed the proper [NetLogo](http://ccl.northwestern.edu/netlogo/download.shtml) and SWI-Prolog versions. Different SWI-Prolog versions can be found [here](http://www.swi-prolog.org/download/stable?show=all).
 
-##### Version compatibility
+### Version compatibility
 
-* NetPrologo is compatible with SWI-Prolog version 9.0.4 for x86_64-linux. Previous versions are not guaranteed to work.
+* NetPrologo is compatible with SWI-Prolog version 9.0.4 (and later) for x86_64-linux. Previous versions are not guaranteed to work.
 * Macos and Windows are not tested, but should work with the right classpath settings
 
-##### Linux Users
+### Prerequisites
 
-* Note that some SWI-Prolog packages for Linux comes without the JPL library. In this case you can install it separately.
-  * In many Linux repositories this library is called `swi-prolog-java` (alternatively it could be swi-prolog-jpl).
+* Note that some SWI-Prolog packages come without the JPL library. In this case you can install it separately.
+  * In many Linux repositories the complete package is called `swi-prolog-java` (alternatively it could be swi-prolog-jpl).
   * You can find the path that contains these libraries by running `swipl --dump-runtime-variables`, and reading the value of `PLLIBDIR`
   * check that `PLLIBDIR` contains the native library:
     * **Windows:** `C:\Program Files (x86)\swipl\bin\` (there should be files like `libswipl.dll`, `jpl.dll`, etc.)
@@ -37,12 +37,26 @@ Before using the extension make sure you have installed the proper [NetLogo](htt
 
 * Go to the NetLogo folder. In `extensions` folder extract the content of the Zip file in a netprologo folder.
 
+### Linux (and macOS)
+
 * To use the bundled version of Java you can run the `Netlogo` file
   * Before you run check that you have the jpl.jar file in the `extensions/netprologo` folder (should be included by default)
   * Modify the `lib/app/netlogo.cfg` file, and add the following just before the last line:\
   `java-options=-Djava.library.path=<PLLIBDIR>`
 
 * To use the system version of Java you can run the `netlogo-gui.sh` file
+  * Before you run it you should edit it, and add the following just before the last line:\
+  `JVM_OPTS=($JVM_OPTS -Djava.library.path="<PLLIBDIR>")`\
+  `ABSOLUTE_CLASSPATH="$ABSOLUTE_CLASSPATH:<PLLIBDIR parent>/jpl.jar"`
+
+### Windows
+
+* To use the bundled version of Java you can run `Netlogo`
+  * Before you run check that you have the jpl.jar file in the `extensions/netprologo` folder (should be included by default)
+  * Modify the `app/NetLogo.cfg` file, and add the following just before the last line:\
+  `java-options=-Djava.library.path=<PLLIBDIR>`
+
+* To use the system version of Java you can run the `netlogo-gui.bat` file
   * Before you run it you should edit it, and add the following just before the last line:\
   `JVM_OPTS=($JVM_OPTS -Djava.library.path="<PLLIBDIR>")`\
   `ABSOLUTE_CLASSPATH="$ABSOLUTE_CLASSPATH:<PLLIBDIR parent>/jpl.jar"`
